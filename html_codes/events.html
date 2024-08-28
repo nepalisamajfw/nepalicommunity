@@ -264,18 +264,22 @@
             const token = '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';
             const repo = 'nepalisamajfw/fileshare';
             const filePath = 'rsvp.csv';
-            const branch = 'main'; // or the branch you want to commit to
+            const branch = 'main';
 
             // Get the current file's SHA (if it exists)
-            const getFileShaUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`;
+            const getFileShaUrl = `https://api.github.com/repos/${repo}/contents/${filePath}?ref=${branch}`;
             const getFileShaResponse = await fetch(getFileShaUrl, {
                 headers: {
                     'Authorization': `token ${token}`,
                     'Accept': 'application/vnd.github.v3+json'
                 }
             });
-            const getFileShaData = await getFileShaResponse.json();
-            const fileSha = getFileShaData.sha;
+
+            let fileSha = null;
+            if (getFileShaResponse.ok) {
+                const getFileShaData = await getFileShaResponse.json();
+                fileSha = getFileShaData.sha;
+            }
 
             // Create the commit
             const commitUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`;
@@ -296,7 +300,8 @@
                 document.getElementById('rsvpMessage').textContent = 'RSVP successful and data saved to GitHub!';
                 fetchRSVPData();
             } else {
-                document.getElementById('rsvpMessage').textContent = 'There was an error saving data to GitHub. Please try again.';
+                const errorData = await commitResponse.json();
+                document.getElementById('rsvpMessage').textContent = `There was an error saving data to GitHub: ${errorData.message}`;
             }
         }
 
@@ -326,9 +331,14 @@
                     'Accept': 'application/vnd.github.v3+json'
                 }
             });
-            const data = await response.json();
-            const csvContent = atob(data.content);
-            displayRSVPData(csvContent);
+
+            if (response.ok) {
+                const data = await response.json();
+                const csvContent = atob(data.content);
+                displayRSVPData(csvContent);
+            } else {
+                console.error('Error fetching RSVP data:', response.statusText);
+            }
         }
 
         function displayRSVPData(csvContent) {
