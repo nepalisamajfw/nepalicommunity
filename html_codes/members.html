@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members - Nepali Community</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+        <img src="../images/usa-flag.gif" alt="USA Flag" style="height: 50px;">
+        <h1>Nepali Samaj - Fort Wayne, IN</h1>
+        <img src="../images/nepal-flag.gif" alt="Nepal Flag" style="height: 50px;">
+        </div>
+        <div class="announcement">फोर्ट वेन, इन्डियामा नेपाली समुदायमा स्वागत छ। हामी नेपाली संस्कृति र परम्पराको संरक्षण र प्रवर्द्धनमा समर्पित एक जीवन्त समुदाय हौं।</div>
+    </header>
+    <nav>
+        <a href="../index.html">Home</a>
+        <a href="events.html">Events</a>
+        <a href="members.html">Members</a>
+        <a href="nepalinews.html">Nepali News</a>
+        <a href="fileshare.html">File Share</a>
+    </nav>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search for names..">
+        </div>
+        <div class="members" id="membersList">
+            <div class="member">
+                <h3>Name: Naresh Singh Khadka</h3>
+                <p>Address: Fort Wayne, IN 46845</p>
+                <p>Mobile: </p>
+            </div>
+            <div class="member">
+                <h3>Name: Anil Karki (Admin)</h3>
+                <p>Address: Fort Wayne, IN 46845</p>
+                <p>Mobile: </p>
+            </div>
+            <div class="member">
+                <h3>Name: </h3>
+                <p>Address: Fort Wayne, IN 46845</p>
+                <p>Mobile: </p>
+            </div>
+			<div class="member">
+                <h3>Name: </h3>
+                <p>Address: Fort Wayne, IN 46845</p>
+                <p>Mobile: </p>
+            </div>
+			<div class="member">
+                <h3>Name: </h3>
+                <p>Address: Fort Wayne, IN 46845</p>
+                <p>Mobile: </p>
+            </div>
+			<div class="member">
+                <h3>Name: </h3>
+                <p>Address: Fort Wayne, IN 46845</p>
+                <p>Mobile: </p>
+            </div>
+            <!-- Add more members as needed -->
+        </div>
+    </div>
+	<footer class="footer">
+        <p>© 2024 Nepali Community - Fort Wayne, IN</p>
+    </footer>
+    <script>
+        function searchMembers() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toUpperCase();
+            const membersList = document.getElementById('membersList');
+            const members = membersList.getElementsByClassName('member');
+            for (let i = 0; i < members.length; i++) {
+                const name = members[i].getElementsByTagName('h3')[0];
+                if (name.innerText.toUpperCase().indexOf(filter) > -1) {
+                    members[i].style.display = "";
+                } else {
+                    members[i].style.display = "none";
+                }
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('input', searchMembers);
+    </script>
+</body>
+</html>

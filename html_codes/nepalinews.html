@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nepali News - Nepali Community</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        header, nav, main, footer {
+            width: 100%;
+            max-width: 1200px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .flex-container {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+        }
+        iframe {
+            border: none;
+            width: 300px;
+            height: 200px;
+            margin: 10px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+        <img src="../images/usa-flag.gif" alt="USA Flag" style="height: 50px;">
+        <h1>Nepali Samaj - Fort Wayne, IN</h1>
+        <img src="../images/nepal-flag.gif" alt="Nepal Flag" style="height: 50px;">
+        </div>
+        <div class="announcement">फोर्ट वेन, इन्डियामा नेपाली समुदायमा स्वागत छ। हामी नेपाली संस्कृति र परम्पराको संरक्षण र प्रवर्द्धनमा समर्पित एक जीवन्त समुदाय हौं।</div>
+    </header>
+    <nav>
+        <a href="../index.html">Home</a>
+        <a href="events.html">Events</a>
+        <a href="members.html">Members</a>
+        <a href="nepalinews.html">Nepali News</a>
+        <a href="fileshare.html">File Share</a>
+    </nav>
+    <main>
+        <h2>Live Nepali Radio</h2>
+        <div class="flex-container" id="radio">
+            <iframe src="https://onlineradiobox.com/np/kantipur/" title="Radio Kantipur"></iframe>
+            <iframe src="https://onlineradiobox.com/np/hits/" title="Hits FM"></iframe>
+            <iframe src="https://onlineradiobox.com/np/image979/" title="Image FM"></iframe>
+            <iframe src="https://onlineradiobox.com/np/nepal/" title="Radio Nepal"></iframe>
+        </div>
+        <h2>Nepali Newspapers</h2>
+        <ul>
+            <li><a href="https://kathmandupost.com/" target="_blank">The Kathmandu Post</a></li>
+            <li><a href="https://ekantipur.com/" target="_blank">Kantipur</a></li>
+            <li><a href="https://thehimalayantimes.com/" target="_blank">The Himalayan Times</a></li>
+            <li><a href="https://www.janaaastha.com/" target="_blank">Jana Aastha</a></li>
+            <li><a href="https://gorkhapatraonline.com/" target="_blank">Gorkhapatra</a></li>
+        </ul>
+    </main>
+    <footer class="footer">
+        <p>© 2024 Nepali Community - Fort Wayne, IN</p>
+    </footer>
+
+    <script>
+        // Function to block ads
+        function blockAds() {
+            const adSelectors = ['iframe[src*="ads"]', 'iframe[src*="advertisement"]', '.ad', '.ads', '.advertisement'];
+            adSelectors.forEach(selector => {
+                document.querySelectorAll(selector).forEach(ad => ad.style.display = 'none');
+            });
+        }
+
+        // Run the ad blocker function after the page loads
+        window.onload = blockAds;
+    </script>
+</body>
+</html>

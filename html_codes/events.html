@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming Events - Nepali Community</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .events {
+            width: 70%;
+        }
+        .buttons {
+            width: 25%;
+            margin-left: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .rsvp-button, .potluck-button {
+            margin: 10px 0;
+        }
+        .rsvp-button button, .potluck-button button {
+            width: 50px;
+            height: 50px;
+            border: none;
+            cursor: pointer;
+        }
+        .rsvp-button button {
+            border-radius: 50%;
+            background-color: #4CAF50;
+            color: white;
+        }
+        .potluck-button button {
+            border-radius: 10%;
+            background-color: #FF5733;
+            color: white;
+            width: 60px;
+            height: 60px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            animation: zoomOut 0.5s;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+        }
+        @keyframes zoomOut {
+            from {transform: scale(1.2);}
+            to {transform: scale(1);}
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .form {
+            display: flex;
+            flex-direction: column;
+        }
+        .form label {
+            margin-top: 10px;
+        }
+        .form input, .form select, .form button {
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .form button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .potluck-section {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .potluck-list {
+            width: 45%;
+        }
+        .potluck-list h3 {
+            text-align: center;
+            background-color: #f2f2f2;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .potluck-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .potluck-list li {
+            background-color: #e6e6e6;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+        <img src="../images/usa-flag.gif" alt="USA Flag" style="height: 50px;">
+        <h1>Nepali Samaj - Fort Wayne, IN</h1>
+        <img src="../images/nepal-flag.gif" alt="Nepal Flag" style="height: 50px;">
+        </div>
+        <div class="announcement">फोर्ट वेन, इन्डियामा नेपाली समुदायमा स्वागत छ। हामी नेपाली संस्कृति र परम्पराको संरक्षण र प्रवर्द्धनमा समर्पित एक जीवन्त समुदाय हौं।</div>
+    </header>
+    <nav>
+        <a href="../index.html">Home</a>
+        <a href="events.html">Events</a>
+        <a href="members.html">Members</a>
+        <a href="nepalinews.html">Nepali News</a>
+        <a href="fileshare.html">File Share</a>
+    </nav>
+    <div class="container">
+        <div class="events">
+            <h2>Upcoming Events</h2>
+            <div class="event-item">
+                <h3>Nepali Language Class</h3>
+                <p><strong>Venue:</strong> Allen County Public Library</p>
+                <p><strong>Date & Time:</strong> Aug 31, 2024 (4:30 PM - 5:30 PM)</p>
+                <p><strong>Dress Code:</strong> Not Specified</p>
+                <p><strong>Notes:</strong> Students to bring pen and notebook</p>
+            </div>
+            <div class="event-item">
+                <h3>Event 2</h3>
+                <p><strong>Venue:</strong> Venue 2</p>
+                <p><strong>Date & Time:</strong> Date 2, Time 2</p>
+                <p><strong>Dress Code:</strong> Dress Code 2</p>
+                <p><strong>Notes:</strong> Notes 2</p>
+            </div>
+            <div class="event-item">
+                <h3>Event 3</h3>
+                <p><strong>Venue:</strong> Venue 3</p>
+                <p><strong>Date & Time:</strong> Date 3, Time 3</p>
+                <p><strong>Dress Code:</strong> Dress Code 3</p>
+                <p><strong>Notes:</strong> Notes 3</p>
+            </div>
+        </div>
+        <div class="buttons">
+            <!-- Admin can set these flags to true or false -->
+            <script>
+                const enableRSVP = true; // Set to false to disable RSVP
+                const enablePotluck = true; // Set to false to disable Potluck
+            </script>
+            <div class="rsvp-button" style="display: none;">
+                <button onclick="openRSVPForm()">RSVP</button>
+            </div>
+            <div class="potluck-button" style="display: none;">
+                <button onclick="openPotluckForm()">Potluck</button>
+            </div>
+            <div class="potluck-section">
+                <div class="potluck-list">
+                    <h3>Potluck Contributors</h3>
+                    <ul id="potluckContributors"></ul>
+                </div>
+                <div class="potluck-list">
+                    <h3>Potluck Contributions</h3>
+                    <ul id="potluckContributions"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <p>© 2024 Nepali Community - Fort Wayne, IN</p>
+    </footer>
+
+    <div id="rsvpModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRSVPForm()">×</span>
+            <form id="rsvpForm" class="form">
+                <label for="eventName">Event Name:</label>
+                <select id="eventName" name="eventName" required>
+                    <option value="Nepali Language Class">Nepali Language Class</option>
+                    <option value="Event 2">Event 2</option>
+                    <option value="Event 3">Event 3</option>
+                </select>
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" required>
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" required>
+                <label for="participants">No. of Participants:</label>
+                <input type="number" id="participants" name="participants" required>
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+                <button type="submit">RSVP</button>
+            </form>
+            <p id="rsvpMessage"></p>
+        </div>
+    </div>
+
+    <div id="potluckModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePotluckForm()">×</span>
+            <form id="potluckForm" class="form">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" required>
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" required>
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="foodItem">Food Item:</label>
+                <input type="text" id="foodItem" name="foodItem" required>
+                <button type="submit">Submit</button>
+            </form>
+            <p id="potluckMessage"></p>
+        </div>
+    </div>
+
+    <script>
+    function openRSVPForm() {
+        document.getElementById('rsvpModal').style.display = 'block';
+    }
+
+    function closeRSVPForm() {
+        document.getElementById('rsvpModal').style.display = 'none';
+    }
+
+    function openPotluckForm() {
+        document.getElementById('potluckModal').style.display = 'block';
+    }
+
+    function closePotluckForm() {
+        document.getElementById('potluckModal').style.display = 'none';
+    }
+
+    document.getElementById('rsvpForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const eventName = document.getElementById('eventName').value;
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const participants = document.getElementById('participants').value;
+        const email = document.getElementById('email').value;
+
+        const csvData = `Event Name,First Name,Last Name,Participants,Email\n${eventName},${firstName},${lastName},${participants},${email}\n`;
+
+        const blob = new Blob([csvData], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'rsvp.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        const formData = new FormData();
+        formData.append('csv', blob);
+
+        fetch('send_email.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('rsvpMessage').textContent = 'RSVP successful and email sent!';
+        })
+        .catch(error => {
+            document.getElementById('rsvpMessage').textContent = 'There was an error. Please try again.';
+        });
+    });
+
+    document.getElementById('potluckForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const email = document.getElementById('email').value;
+        const foodItem = document.getElementById('foodItem').value;
+
+        const contributorItem = document.createElement('li');
+        contributorItem.textContent = `${firstName} ${lastName}`;
+        document.getElementById('potluckContributors').appendChild(contributorItem);
+
+        const foodItemElement = document.createElement('li');
+        foodItemElement.textContent = `${foodItem}`;
+        document.getElementById('potluckContributions').appendChild(foodItemElement);
+
+        document.getElementById('potluckMessage').textContent = 'Potluck item added successfully!';
+        document.getElementById('potluckForm').reset();
+    });
+
+    // Show or hide RSVP and Potluck buttons based on flags
+    document.addEventListener('DOMContentLoaded', function() {
+        if (enableRSVP) {
+            document.querySelector('.rsvp-button').style.display = 'block';
+        }
+        if (enablePotluck) {
+            document.querySelector('.potluck-button').style.display = 'block';
+        }
+    });
+    </script>
+</body>
+</html>

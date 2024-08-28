@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Share - Nepali Community</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .files {
+            width: 70%;
+        }
+        .file-list {
+            margin-top: 20px;
+        }
+        .file-item {
+            background-color: #e6e6e6;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .download-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+    </style>
+    <script>
+        function forceDownload(url, fileName) {
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <img src="../images/usa-flag.gif" alt="USA Flag" style="height: 50px;">
+            <h1>Nepali Samaj - Fort Wayne, IN</h1>
+            <img src="../images/nepal-flag.gif" alt="Nepal Flag" style="height: 50px;">
+        </div>
+        <div class="announcement">फोर्ट वेन, इन्डियामा नेपाली समुदायमा स्वागत छ। हामी नेपाली संस्कृति र परम्पराको संरक्षण र प्रवर्द्धनमा समर्पित एक जीवन्त समुदाय हौं।</div>
+    </header>
+    <nav>
+        <a href="../index.html">Home</a>
+        <a href="events.html">Events</a>
+        <a href="members.html">Members</a>
+        <a href="nepalinews.html">Nepali News</a>
+        <a href="fileshare.html">File Share</a>
+    </nav>
+    <div class="container">
+        <div class="files">
+            <h2>File Share</h2>
+            <div class="file-list">
+                <div class="file-item">
+                    <span>Nepali_Book_1.pdf</span>
+                    <button class="download-button" onclick="forceDownload('https://github.com/nepalisamajfw/fileshare/Books/Nepali_Book_1.pdf', 'Nepali_Book_1.pdf')">Download</button>
+                </div>
+                <div class="file-item">
+                    <span>Nepali_Book_2.pdf</span>
+                    <button class="download-button" onclick="forceDownload('https://github.com/nepalisamajfw/fileshare/Books/Nepali_Book_2.pdf', 'Nepali_Book_2.pdf')">Download</button>
+                </div>
+				<div class="file-item">
+                    <span>Nepali_Book_3.pdf</span>
+                    <button class="download-button" onclick="forceDownload('https://github.com/nepalisamajfw/fileshare/Books/Nepali_Book_3.pdf', 'Nepali_Book_3.pdf')">Download</button>
+                </div>
+				<div class="file-item">
+                    <span>Nepali_Book_4.pdf</span>
+                    <button class="download-button" onclick="forceDownload('https://github.com/nepalisamajfw/fileshare/Books/Nepali_Book_4.pdf', 'Nepali_Book_4.pdf')">Download</button>
+                </div>
+                <!-- Add more file items as needed -->
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <p>© 2024 Nepali Community - Fort Wayne, IN</p>
+    </footer>
+</body>
+</html>
