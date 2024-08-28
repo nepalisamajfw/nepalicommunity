@@ -170,23 +170,29 @@
             <!-- Admin can set these flags to true or false -->
             <script>
                 const enableRSVP = true; // Set to false to disable RSVP
-                const enablePotluck = true; // Set to false to disable Potluck
+                const enablePotluck = false; // Set to false to disable Potluck
             </script>
             <div class="rsvp-button" style="display: none;">
                 <button onclick="openRSVPForm()">RSVP</button>
             </div>
+			<div id="rsvpList">
+        <h3>RSVP List</h3>
+			<table id="rsvpTable">
+				<thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Participants</th>
+                </tr>
+				</thead>
+				<tbody>
+                <!-- RSVP data will be inserted here -->
+				</tbody>
+			</table>
+			</div>
             <div class="potluck-button" style="display: none;">
                 <button onclick="openPotluckForm()">Potluck</button>
-            </div>
-            <div class="potluck-section">
-                <div class="potluck-list">
-                    <h3>Potluck Contributors</h3>
-                    <ul id="potluckContributors"></ul>
-                </div>
-                <div class="potluck-list">
-                    <h3>Potluck Contributions</h3>
-                    <ul id="potluckContributions"></ul>
-                </div>
             </div>
         </div>
     </div>
@@ -235,89 +241,124 @@
             <p id="potluckMessage"></p>
         </div>
     </div>
+	
 
-    <script>
-    function openRSVPForm() {
-        document.getElementById('rsvpModal').style.display = 'block';
-    }
+     <script>
+        function openRSVPForm() {
+            document.getElementById('rsvpModal').style.display = 'block';
+        }
 
-    function closeRSVPForm() {
-        document.getElementById('rsvpModal').style.display = 'none';
-    }
+        function closeRSVPForm() {
+            document.getElementById('rsvpModal').style.display = 'none';
+        }
 
-    function openPotluckForm() {
-        document.getElementById('potluckModal').style.display = 'block';
-    }
+        function openPotluckForm() {
+            document.getElementById('potluckModal').style.display = 'block';
+        }
 
-    function closePotluckForm() {
-        document.getElementById('potluckModal').style.display = 'none';
-    }
+        function closePotluckForm() {
+            document.getElementById('potluckModal').style.display = 'none';
+        }
 
-    document.getElementById('rsvpForm').addEventListener('submit', function(event) {
-        event.preventDefault();
+        async function commitCSVToGitHub(csvData) {
+            const token = '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';
+            const repo = 'nepalisamajfw/fileshare';
+            const filePath = 'rsvp.csv';
+            const branch = 'main'; // or the branch you want to commit to
 
-        const eventName = document.getElementById('eventName').value;
-        const firstName = document.getElementById('firstName').value;
-        const lastName = document.getElementById('lastName').value;
-        const participants = document.getElementById('participants').value;
-        const email = document.getElementById('email').value;
+            // Get the current file's SHA (if it exists)
+            const getFileShaUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`;
+            const getFileShaResponse = await fetch(getFileShaUrl, {
+                headers: {
+                    'Authorization': `token ${token}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            });
+            const getFileShaData = await getFileShaResponse.json();
+            const fileSha = getFileShaData.sha;
 
-        const csvData = `Event Name,First Name,Last Name,Participants,Email\n${eventName},${firstName},${lastName},${participants},${email}\n`;
+            // Create the commit
+            const commitUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`;
+            const commitResponse = await fetch(commitUrl, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${token}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                },
+                body: JSON.stringify({
+                    message: 'Add new RSVP entry',
+                    content: btoa(csvData),
+                    sha: fileSha
+                })
+            });
 
-        const blob = new Blob([csvData], { type: 'text/csv' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'rsvp.csv';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+            if (commitResponse.ok) {
+                document.getElementById('rsvpMessage').textContent = 'RSVP successful and data saved to GitHub!';
+                fetchRSVPData();
+            } else {
+                document.getElementById('rsvpMessage').textContent = 'There was an error saving data to GitHub. Please try again.';
+            }
+        }
 
-        const formData = new FormData();
-        formData.append('csv', blob);
+        document.getElementById('rsvpForm').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-        fetch('send_email.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('rsvpMessage').textContent = 'RSVP successful and email sent!';
-        })
-        .catch(error => {
-            document.getElementById('rsvpMessage').textContent = 'There was an error. Please try again.';
+            const eventName = document.getElementById('eventName').value;
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const participants = document.getElementById('participants').value;
+            const email = document.getElementById('email').value;
+
+            const csvData = `Event Name,First Name,Last Name,Participants,Email\n${eventName},${firstName},${lastName},${participants},${email}\n`;
+
+            commitCSVToGitHub(csvData);
         });
-    });
 
-    document.getElementById('potluckForm').addEventListener('submit', function(event) {
-        event.preventDefault();
+        async function fetchRSVPData() {
+            const token = 'YOUR_GITHUB_PERSONAL_ACCESS_TOKEN';
+            const repo = 'nepalisamajfw/fileshare';
+            const filePath = 'rsvp.csv';
 
-        const firstName = document.getElementById('firstName').value;
-        const lastName = document.getElementById('lastName').value;
-        const email = document.getElementById('email').value;
-        const foodItem = document.getElementById('foodItem').value;
-
-        const contributorItem = document.createElement('li');
-        contributorItem.textContent = `${firstName} ${lastName}`;
-        document.getElementById('potluckContributors').appendChild(contributorItem);
-
-        const foodItemElement = document.createElement('li');
-        foodItemElement.textContent = `${foodItem}`;
-        document.getElementById('potluckContributions').appendChild(foodItemElement);
-
-        document.getElementById('potluckMessage').textContent = 'Potluck item added successfully!';
-        document.getElementById('potluckForm').reset();
-    });
-
-    // Show or hide RSVP and Potluck buttons based on flags
-    document.addEventListener('DOMContentLoaded', function() {
-        if (enableRSVP) {
-            document.querySelector('.rsvp-button').style.display = 'block';
+            const getFileUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`;
+            const response = await fetch(getFileUrl, {
+                headers: {
+                    'Authorization': `token ${token}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            });
+            const data = await response.json();
+            const csvContent = atob(data.content);
+            displayRSVPData(csvContent);
         }
-        if (enablePotluck) {
-            document.querySelector('.potluck-button').style.display = 'block';
+
+        function displayRSVPData(csvContent) {
+            const rows = csvContent.split('\n').slice(1); // Skip the header row
+            const tableBody = document.getElementById('rsvpTable').querySelector('tbody');
+            tableBody.innerHTML = ''; // Clear existing data
+
+            rows.forEach(row => {
+                if (row.trim() !== '') {
+                    const columns = row.split(',');
+                    const tr = document.createElement('tr');
+                    columns.forEach(column => {
+                        const td = document.createElement('td');
+                        td.textContent = column;
+                        tr.appendChild(td);
+                    });
+                    tableBody.appendChild(tr);
+                }
+            });
         }
-    });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (enableRSVP) {
+                document.querySelector('.rsvp-button').style.display = 'block';
+                fetchRSVPData();
+            }
+            if (enablePotluck) {
+                document.querySelector('.potluck-button').style.display = 'block';
+            }
+        });
     </script>
 </body>
 </html>
