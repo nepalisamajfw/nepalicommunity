@@ -126,31 +126,3 @@ nav a:hover {
     padding: 10px;
     border-radius: 5px;
 }
-
-/* Media Queries for Responsiveness */
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-        padding: 10px;
-    }
-    .main {
-        margin-right: 0;
-        margin-bottom: 20px;
-    }
-    .sidebar {
-        margin-bottom: 20px;
-    }
-    .image-row {
-        flex-direction: column;
-    }
-    .image-row img {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-    nav {
-        flex-direction: column;
-    }
-    nav a {
-        padding: 10px;
-    }
-}
