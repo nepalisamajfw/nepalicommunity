@@ -145,21 +145,21 @@
         <div class="events">
             <h2>Upcoming Events</h2>
             <div class="event-item">
-                <h3> Nepali Language Class </h3>
+                <h3> Nepali Language Class - Session 2</h3>
                 <p><strong>Venue:</strong> Allen County Public Library</p>
                 <p><strong>Date & Time:</strong> Aug 31, 2024 (4:30 PM - 5:30 PM)</p>
                 <p><strong>Dress Code:</strong> Not Specified</p>
                 <p><strong>Notes:</strong> Students to bring pen and notebook</p>
             </div>
             <div class="event-item">
-                <h3> Nepali Language Class </h3>
+                <h3> Nepali Language Class - Session 3 </h3>
                 <p><strong>Venue:</strong> Allen County Public Library</p>
                 <p><strong>Date & Time:</strong> Sep 14, 2024 (4:30 PM - 5:30 PM)</p>
                 <p><strong>Dress Code:</strong> Not Specified</p>
                 <p><strong>Notes:</strong> Students to bring pen and notebook</p>
             </div>
             <div class="event-item">
-                <h3> Bada Dashain Bhet Ghat Karyakam</h3>
+                <h3> Bada Dashain Bhet Ghat Karyakam </h3>
                 <p><strong>Venue:</strong> Shoaff Riverlodge Pavilion, 6401 St Joe Rd, Fort Wayne, IN, 46835 </p>
                 <p><strong>Date & Time:</strong> Oct 11, 2024 (6:00 PM - 10:00 PM)</p>
                 <p><strong>Dress Code:</strong> Casual / Nepali Traditional Outfits </p>
@@ -206,9 +206,9 @@
             <form id="rsvpForm" class="form">
                 <label for="eventName">Event Name:</label>
                 <select id="eventName" name="eventName" required>
-                    <option value="Nepali Language Class">Nepali Language Class</option>
-                    <option value="Event 2">Event 2</option>
-                    <option value="Event 3">Event 3</option>
+                    <option value="Nepali Language Class - Session 2">Nepali Language Class - Session 2</option>
+                    <option value="Nepali Language Class - Session 3">Nepali Language Class - Session 3</option>
+                    <option value="Bada Dashain Bhet Ghat Karyakam ">Bada Dashain Bhet Ghat Karyakam</option>
                 </select>
                 <label for="firstName">First Name:</label>
                 <input type="text" id="firstName" name="firstName" required>
@@ -262,7 +262,7 @@
 
         async function commitCSVToGitHub(csvData) {
             const token = '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';
-            const repo = 'nepalisamajfw';
+            const repo = 'nepalisamajfw/fileshare';
             const filePath = 'rsvp.csv';
             const branch = 'main';
 
@@ -320,7 +320,7 @@
         });
 
         async function fetchRSVPData() {
-            const token = 'YOUR_GITHUB_PERSONAL_ACCESS_TOKEN';
+            const token = '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';
             const repo = 'nepalisamajfw/fileshare';
             const filePath = 'rsvp.csv';
 
