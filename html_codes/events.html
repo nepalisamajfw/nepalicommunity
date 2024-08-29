@@ -265,10 +265,36 @@
             document.getElementById('potluckModal').style.display = 'none';
         }
 
+        function addRSVPToList(eventName, firstName, lastName, participants) {
+            const tableBody = document.getElementById('rsvpTable').querySelector('tbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${eventName}</td>
+                <td>${firstName}</td>
+                <td>${lastName}</td>
+                <td>${participants}</td>
+            `;
+            tableBody.appendChild(newRow);
+        }
+
+        function addPotluckToList(firstName, lastName, foodItem) {
+            const potluckList = document.querySelector('.potluck-list ul');
+            const newItem = document.createElement('li');
+            newItem.textContent = `${firstName} ${lastName} - ${foodItem}`;
+            potluckList.appendChild(newItem);
+        }
+
         document.getElementById('rsvpForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const form = event.target;
             const formData = new FormData(form);
+            const eventName = formData.get('eventName');
+            const firstName = formData.get('firstName');
+            const lastName = formData.get('lastName');
+            const participants = formData.get('participants');
+
+            addRSVPToList(eventName, firstName, lastName, participants);
+
             fetch(form.action, {
                 method: form.method,
                 body: formData,
@@ -290,6 +316,12 @@
             event.preventDefault();
             const form = event.target;
             const formData = new FormData(form);
+            const firstName = formData.get('firstName');
+            const lastName = formData.get('lastName');
+            const foodItem = formData.get('foodItem');
+
+            addPotluckToList(firstName, lastName, foodItem);
+
             fetch(form.action, {
                 method: form.method,
                 body: formData,
