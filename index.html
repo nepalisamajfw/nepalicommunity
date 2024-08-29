@@ -45,12 +45,15 @@
                 </div>
             </section>
             <section id="comments">
-                <h2>Submit an Announcement or Event</h2>
-                <form class="comment-form">
-                    <textarea id="comment" name="comment" rows="4" placeholder="Write your announcement or event details here..."></textarea>
-                    <button type="submit">Submit</button>
-                </form>
-            </section>
+			<h2>Submit an Announcement or Event</h2>
+			<form class="comment-form" action="https://formspree.io/f/xkgwypeo" method="POST">
+				<textarea id="comment" name="comment" rows="4" placeholder="Write in detail about the announcement or event details here..."></textarea>
+				<input type="hidden" name="_subject" value="New Comment Submission">
+				<input type="hidden" name="_captcha" value="false">
+				<input type="hidden" name="_next" value="https://nepalisamajfw.github.io/nepalicommunity/index.html">
+				<button type="submit">Submit</button>
+			</form>
+	    </section>
         </div>
         <div class="sidebar">
             <h2>Nepali Calendar</h2>
