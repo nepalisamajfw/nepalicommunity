@@ -170,7 +170,7 @@
             <!-- Admin can set these flags to true or false -->
             <script>
                 const enableRSVP = true; // Set to false to disable RSVP
-                const enablePotluck = true; // Set to false to disable Potluck
+                const enablePotluck = false; // Set to false to disable Potluck
             </script>
             <div class="rsvp-button" style="display: none;">
                 <button onclick="openRSVPForm()">RSVP</button>
@@ -265,72 +265,10 @@
             document.getElementById('potluckModal').style.display = 'none';
         }
 
-        function addRSVPToList(eventName, firstName, lastName, participants) {
-            const tableBody = document.getElementById('rsvpTable').querySelector('tbody');
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td>${eventName}</td>
-                <td>${firstName}</td>
-                <td>${lastName}</td>
-                <td>${participants}</td>
-            `;
-            tableBody.appendChild(newRow);
-        }
-
-        async function commitCSVToGitHub(eventName, csvData) {
-            const token = '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';
-            const repo = 'nepalisamajfw/fileshare';
-            const filePath = `${eventName.replace(/\s+/g, '_').toLowerCase()}.csv`;
-            const branch = 'main'; // or the branch you want to commit to
-
-            // Get the current file's SHA (if it exists)
-            const getFileShaUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`;
-            const getFileShaResponse = await fetch(getFileShaUrl, {
-                headers: {
-                    'Authorization': `token ${token}`,
-                    'Accept': 'application/vnd.github.v3+json'
-                }
-            });
-            const getFileShaData = await getFileShaResponse.json();
-            const fileSha = getFileShaData.sha;
-
-            // Create the commit
-            const commitUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`;
-            const commitResponse = await fetch(commitUrl, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `token ${token}`,
-                    'Accept': 'application/vnd.github.v3+json'
-                },
-                body: JSON.stringify({
-                    message: `Add new RSVP entry for ${eventName}`,
-                    content: btoa(csvData),
-                    sha: fileSha
-                })
-            });
-
-            if (commitResponse.ok) {
-                document.getElementById('rsvpMessage').textContent = 'RSVP successful and data saved to GitHub!';
-            } else {
-                document.getElementById('rsvpMessage').textContent = 'There was an error saving data to GitHub. Please try again.';
-            }
-        }
-
         document.getElementById('rsvpForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const form = event.target;
             const formData = new FormData(form);
-            const eventName = formData.get('eventName');
-            const firstName = formData.get('firstName');
-            const lastName = formData.get('lastName');
-            const participants = formData.get('participants');
-            const email = formData.get('email');
-
-            const csvData = `Event Name,First Name,Last Name,Participants,Email\n${eventName},${firstName},${lastName},${participants},${email}\n`;
-
-            addRSVPToList(eventName, firstName, lastName, participants);
-            commitCSVToGitHub(eventName, csvData);
-
             fetch(form.action, {
                 method: form.method,
                 body: formData,
