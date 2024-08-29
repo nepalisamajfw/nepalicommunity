@@ -71,57 +71,57 @@
             color: #aaa;
             float: right;
             font-size: 28px;
-            font-weight: bold;
+            font-weight: bold.
         }
         .close:hover,
         .close:focus {
             color: black;
             text-decoration: none;
-            cursor: pointer;
+            cursor: pointer.
         }
         .form {
             display: flex;
-            flex-direction: column;
+            flex-direction: column.
         }
         .form label {
-            margin-top: 10px;
+            margin-top: 10px.
         }
         .form input, .form select, .form button {
             padding: 10px;
             margin-top: 5px;
             border-radius: 5px;
-            border: 1px solid #ccc;
+            border: 1px solid #ccc.
         }
         .form button {
             background-color: #4CAF50;
             color: white;
             border: none;
-            cursor: pointer;
+            cursor: pointer.
         }
         .potluck-section {
             margin-top: 20px;
             width: 100%;
             display: flex;
-            justify-content: space-between;
+            justify-content: space-between.
         }
         .potluck-list {
-            width: 45%;
+            width: 45%.
         }
         .potluck-list h3 {
             text-align: center;
             background-color: #f2f2f2;
             padding: 10px;
-            border-radius: 5px;
+            border-radius: 5px.
         }
         .potluck-list ul {
             list-style-type: none;
-            padding: 0;
+            padding: 0.
         }
         .potluck-list li {
             background-color: #e6e6e6;
             margin: 5px 0;
             padding: 10px;
-            border-radius: 5px;
+            border-radius: 5px.
         }
     </style>
 </head>
@@ -170,27 +170,27 @@
             <!-- Admin can set these flags to true or false -->
             <script>
                 const enableRSVP = true; // Set to false to disable RSVP
-                const enablePotluck = false; // Set to false to disable Potluck
+                const enablePotluck = true; // Set to false to disable Potluck
             </script>
             <div class="rsvp-button" style="display: none;">
                 <button onclick="openRSVPForm()">RSVP</button>
             </div>
-			<div id="rsvpList">
-        <h3>RSVP List</h3>
-			<table id="rsvpTable">
-				<thead>
-                <tr>
-                    <th>Event Name</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Participants</th>
-                </tr>
-				</thead>
-				<tbody>
-                <!-- RSVP data will be inserted here -->
-				</tbody>
-			</table>
-			</div>
+            <div id="rsvpList">
+                <h3>RSVP List</h3>
+                <table id="rsvpTable">
+                    <thead>
+                        <tr>
+                            <th>Event Name</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Participants</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- RSVP data will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
             <div class="potluck-button" style="display: none;">
                 <button onclick="openPotluckForm()">Potluck</button>
             </div>
@@ -203,12 +203,12 @@
     <div id="rsvpModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeRSVPForm()">×</span>
-            <form id="rsvpForm" class="form">
+            <form id="rsvpForm" class="form" action="https://formspree.io/f/xkgwypeo" method="POST">
                 <label for="eventName">Event Name:</label>
                 <select id="eventName" name="eventName" required>
                     <option value="Nepali Language Class - Session 2">Nepali Language Class - Session 2</option>
                     <option value="Nepali Language Class - Session 3">Nepali Language Class - Session 3</option>
-                    <option value="Bada Dashain Bhet Ghat Karyakam ">Bada Dashain Bhet Ghat Karyakam</option>
+                    <option value="Bada Dashain Bhet Ghat Karyakam">Bada Dashain Bhet Ghat Karyakam</option>
                 </select>
                 <label for="firstName">First Name:</label>
                 <input type="text" id="firstName" name="firstName" required>
@@ -218,6 +218,9 @@
                 <input type="number" id="participants" name="participants" required>
                 <label for="email">Email Address:</label>
                 <input type="email" id="email" name="email" required>
+                <input type="hidden" name="_subject" value="New RSVP Submission">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://nepalisamajfw.github.io/nepalicommunity/index.html">
                 <button type="submit">RSVP</button>
             </form>
             <p id="rsvpMessage"></p>
@@ -227,7 +230,7 @@
     <div id="potluckModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closePotluckForm()">×</span>
-            <form id="potluckForm" class="form">
+            <form id="potluckForm" class="form" action="https://formspree.io/f/xkgwypeo" method="POST">
                 <label for="firstName">First Name:</label>
                 <input type="text" id="firstName" name="firstName" required>
                 <label for="lastName">Last Name:</label>
@@ -236,14 +239,16 @@
                 <input type="email" id="email" name="email" required>
                 <label for="foodItem">Food Item:</label>
                 <input type="text" id="foodItem" name="foodItem" required>
+                <input type="hidden" name="_subject" value="New Potluck Submission">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://nepalisamajfw.github.io/nepalicommunity/index.html">
                 <button type="submit">Submit</button>
             </form>
             <p id="potluckMessage"></p>
         </div>
     </div>
-	
 
-     <script>
+    <script>
         function openRSVPForm() {
             document.getElementById('rsvpModal').style.display = 'block';
         }
@@ -260,110 +265,68 @@
             document.getElementById('potluckModal').style.display = 'none';
         }
 
-        async function commitCSVToGitHub(csvData) {
-            const token = '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';
-            const repo = 'nepalisamajfw/html_codes';
-            const filePath = 'rsvp.csv';
-            const branch = 'main';
-
-            // Get the current file's SHA (if it exists)
-            const getFileShaUrl = `https://api.github.com/repos/${repo}/contents/${filePath}?ref=${branch}`;
-            const getFileShaResponse = await fetch(getFileShaUrl, {
-                headers: {
-                    'Authorization': `token ${token}`,
-                    'Accept': 'application/vnd.github.v3+json'
-                }
-            });
-
-            let fileSha = null;
-            if (getFileShaResponse.ok) {
-                const getFileShaData = await getFileShaResponse.json();
-                fileSha = getFileShaData.sha;
-            }
-
-            // Create the commit
-            const commitUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`;
-            const commitResponse = await fetch(commitUrl, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `token ${token}`,
-                    'Accept': 'application/vnd.github.v3+json'
-                },
-                body: JSON.stringify({
-                    message: 'Add new RSVP entry',
-                    content: btoa(csvData),
-                    sha: fileSha
-                })
-            });
-
-            if (commitResponse.ok) {
-                document.getElementById('rsvpMessage').textContent = 'RSVP successful and data saved to GitHub!';
-                fetchRSVPData();
-            } else {
-                const errorData = await commitResponse.json();
-                document.getElementById('rsvpMessage').textContent = `There was an error saving data to GitHub: ${errorData.message}`;
-            }
+        function addRSVPToList(eventName, firstName, lastName, participants) {
+            const tableBody = document.getElementById('rsvpTable').querySelector('tbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${eventName}</td>
+                <td>${firstName}</td>
+                <td>${lastName}</td>
+                <td>${participants}</td>
+            `;
+            tableBody.appendChild(newRow);
         }
 
         document.getElementById('rsvpForm').addEventListener('submit', function(event) {
             event.preventDefault();
-
-            const eventName = document.getElementById('eventName').value;
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const participants = document.getElementById('participants').value;
-            const email = document.getElementById('email').value;
-
-            const csvData = `Event Name,First Name,Last Name,Participants,Email\n${eventName},${firstName},${lastName},${participants},${email}\n`;
-
-            commitCSVToGitHub(csvData);
+            const form = event.target;
+            const formData = new FormData(form);
+            fetch(form.action, {
+                method: form.method,
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    const eventName = formData.get('eventName');
+                    const firstName = formData.get('firstName');
+                    const lastName = formData.get('lastName');
+                    const participants = formData.get('participants');
+                    addRSVPToList(eventName, firstName, lastName, participants);
+                    document.getElementById('rsvpMessage').textContent = 'RSVP successful!';
+                    form.reset();
+                    closeRSVPForm();
+                } else {
+                    document.getElementById('rsvpMessage').textContent = 'There was an error submitting your RSVP. Please try again.';
+                }
+            });
         });
 
-        async function fetchRSVPData() {
-            const token = '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';
-            const repo = 'nepalisamajfw/html_codes';
-            const filePath = 'rsvp.csv';
-
-            const getFileUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`;
-            const response = await fetch(getFileUrl, {
+        document.getElementById('potluckForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            fetch(form.action, {
+                method: form.method,
+                body: formData,
                 headers: {
-                    'Authorization': `token ${token}`,
-                    'Accept': 'application/vnd.github.v3+json'
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    document.getElementById('potluckMessage').textContent = 'Potluck submission successful!';
+                    form.reset();
+                    closePotluckForm();
+                } else {
+                    document.getElementById('potluckMessage').textContent = 'There was an error submitting your potluck. Please try again.';
                 }
             });
-
-            if (response.ok) {
-                const data = await response.json();
-                const csvContent = atob(data.content);
-                displayRSVPData(csvContent);
-            } else {
-                console.error('Error fetching RSVP data:', response.statusText);
-            }
-        }
-
-        function displayRSVPData(csvContent) {
-            const rows = csvContent.split('\n').slice(1); // Skip the header row
-            const tableBody = document.getElementById('rsvpTable').querySelector('tbody');
-            tableBody.innerHTML = ''; // Clear existing data
-
-            rows.forEach(row => {
-                if (row.trim() !== '') {
-                    const columns = row.split(',');
-                    const tr = document.createElement('tr');
-                    columns.forEach(column => {
-                        const td = document.createElement('td');
-                        td.textContent = column;
-                        tr.appendChild(td);
-                    });
-                    tableBody.appendChild(tr);
-                }
-            });
-        }
+        });
 
         document.addEventListener('DOMContentLoaded', function() {
             if (enableRSVP) {
                 document.querySelector('.rsvp-button').style.display = 'block';
-                fetchRSVPData();
             }
             if (enablePotluck) {
                 document.querySelector('.potluck-button').style.display = 'block';
